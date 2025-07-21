@@ -8,7 +8,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Enums\UserRole;
+use Carbon\CarbonInterface;
 
+/**
+ * @property-read int $id,
+ * @property-read string $name,
+ * @property-read UserRole $role,
+ * @property-read string $email,
+ * @property-read CarbonInterface $email_verified_at,
+ * @property-read string $password,
+ * @property-read CarbonInterface $created_at,
+ * @property-read CarbonInterface $updated_at
+ */
 final class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -33,6 +45,10 @@ final class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'role' => UserRole::class
     ];
 
     /**
