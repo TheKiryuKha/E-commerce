@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property-read int $id,
@@ -22,13 +23,13 @@ use Illuminate\Notifications\Notifiable;
  * @property-read string $password,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
- * @property-read Collection $products,
- * @property-read Collection $history
+ * @property-read Collection<int, Product> $products,
+ * @property-read Collection<int, History> $history
  */
 final class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -55,11 +56,17 @@ final class User extends Authenticatable
         'role' => UserRole::class,
     ];
 
+    /**
+     * @return HasMany<Product, $this>
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
+    /**
+     * @return HasMany<History, $this>
+     */
     public function history(): HasMany
     {
         return $this->hasMany(History::class);

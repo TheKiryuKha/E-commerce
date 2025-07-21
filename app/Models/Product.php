@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
  * @property-read User $user,
- * @property-read Collection $history
+ * @property-read Collection<int, History> $history
  */
 final class Product extends Model
 {
@@ -34,11 +34,17 @@ final class Product extends Model
         'status' => ProductStatus::class,
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasMany<History, $this>
+     */
     public function history(): HasMany
     {
         return $this->hasMany(History::class);

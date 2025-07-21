@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property-read int $id,
@@ -16,10 +17,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int $products_amount,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
- * @property-read Collection $products
+ * @property-read Collection<int, Product> $products
  */
 final class Cart extends Model
 {
+    /**
+     * @return BelongsToMany<Product, $this, Pivot>
+     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);

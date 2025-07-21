@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property-read int $id,
@@ -23,18 +24,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at
  * @property-read User $user,
- * @property-read Collection $products
+ * @property-read Collection<int, Product> $products
  */
 final class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
     use HasFactory;
 
+    /**
+     * @return BelongsToMany<Product, $this, Pivot>
+     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
