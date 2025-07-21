@@ -8,6 +8,7 @@ use App\Enums\ProductStatus;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property-read int $id,
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int $quantity,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
+ * @property-read User $user
  */
 final class Product extends Model
 {
@@ -28,4 +30,9 @@ final class Product extends Model
     protected $casts = [
         'status' => ProductStatus::class,
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

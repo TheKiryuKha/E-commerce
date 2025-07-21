@@ -7,7 +7,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,7 +21,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read CarbonInterface $email_verified_at,
  * @property-read string $password,
  * @property-read CarbonInterface $created_at,
- * @property-read CarbonInterface $updated_at
+ * @property-read CarbonInterface $updated_at,
+ * @property-read Collection $products
  */
 final class User extends Authenticatable
 {
@@ -50,6 +53,11 @@ final class User extends Authenticatable
     protected $casts = [
         'role' => UserRole::class,
     ];
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 
     /**
      * Get the attributes that should be cast.
