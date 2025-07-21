@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use App\Enums\InvoiceStatus;
+use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+/**
+ * @property-read int $id,
+ * @property-read int $user_id,
+ * @property-read int $cost,
+ * @property-read string $address,
+ * @property-read string $user_telephone,
+ * @property-read string $user_email,
+ * @property-read InvoiceStatus $status,
+ * @property-read CarbonInterface $created_at,
+ * @property-read CarbonInterface $updated_at
+ * @property-read User $user,
+ * @property-read Collection $products
+ */
+final class Invoice extends Model
+{
+    /** @use HasFactory<\Database\Factories\InvoiceFactory> */
+    use HasFactory;
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}
