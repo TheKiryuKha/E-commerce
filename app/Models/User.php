@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Enums\UserRole;
-use Carbon\CarbonInterface;
 
 /**
  * @property-read int $id,
@@ -48,7 +48,7 @@ final class User extends Authenticatable
     ];
 
     protected $casts = [
-        'role' => UserRole::class
+        'role' => UserRole::class,
     ];
 
     /**
