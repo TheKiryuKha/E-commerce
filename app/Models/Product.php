@@ -6,9 +6,11 @@ namespace App\Models;
 
 use App\Enums\ProductStatus;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property-read int $id,
@@ -20,7 +22,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read int $quantity,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
- * @property-read User $user
+ * @property-read User $user,
+ * @property-read Collection $history
  */
 final class Product extends Model
 {
@@ -34,5 +37,10 @@ final class Product extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function history(): HasMany
+    {
+        return $this->hasMany(History::class);
     }
 }

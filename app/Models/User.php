@@ -22,7 +22,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read string $password,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
- * @property-read Collection $products
+ * @property-read Collection $products,
+ * @property-read Collection $history
  */
 final class User extends Authenticatable
 {
@@ -57,6 +58,11 @@ final class User extends Authenticatable
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function history(): HasMany
+    {
+        return $this->hasMany(History::class);
     }
 
     /**
