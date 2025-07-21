@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * @property-read int $id,
@@ -24,7 +25,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
  * @property-read Collection<int, Product> $products,
- * @property-read Collection<int, History> $history
+ * @property-read Collection<int, History> $history,
+ * @property-read Collection<int, PersonalAccessToken> $tokens
  */
 final class User extends Authenticatable
 {
