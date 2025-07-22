@@ -4,17 +4,24 @@ declare(strict_types=1);
 
 namespace App\DTOs;
 
-final class UserDto
+use App\Enums\UserRole;
+
+final readonly class UserDto
 {
     public function __construct(
-        public readonly ?string $name,
-        public readonly ?string $role,
-        public readonly string $email,
-        public readonly string $password
+        public ?string $name,
+        public ?UserRole $role,
+        public string $email,
+        public string $password
     ) {}
 
     /**
-     * @param  array<string, string>  $attr
+     * @param array{
+     * name?: ?string,
+     * role?: ?UserRole,
+     * email: string,
+     * password: string
+     * } $attr
      */
     public static function make(array $attr): self
     {

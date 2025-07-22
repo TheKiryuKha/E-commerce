@@ -13,17 +13,28 @@ test('validation works', function () {
     ]);
 });
 
-test('cannot login with non-existent data', function () {
+test('cannot login with wrong data', function () {
     $user = [
-        'email' => 'test@mail.com',
-        'password' => 'password',
+        'email' => User::factory()->create()->email,
+        'password' => 'wrongPassword',
     ];
 
     $response = $this->post(route('api:auth:login'), $user);
 
-    $response->assertStatus(302);
+    $response->assertStatus(400);
 
     $this->assertGuest();
+});
+
+test('unverified user cannot login', function () {
+    $user = User::factory()->unverified()->create();
+
+    $response = $this->post(route('api:auth:login'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
+
+    $response->assertStatus(400);
 });
 
 test('user can login', function () {

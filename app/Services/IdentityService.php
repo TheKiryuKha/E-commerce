@@ -9,24 +9,36 @@ use App\Models\User;
 use Illuminate\Auth\AuthManager;
 use Laravel\Sanctum\NewAccessToken;
 
-final class IdentityService
+final readonly class IdentityService
 {
     public function __construct(
-        private readonly AuthManager $auth
+        private AuthManager $auth
     ) {}
 
     public function login(UserDto $dto): bool
     {
-        return $this->auth->attempt(
-            credentials: $dto->credentials()
-        );
+        if (! $this->auth->attempt($dto->credentials())) {
+            return false;
+        }
+
+        return $this->getUser()->hasVerifiedEmail();
     }
 
-    public function createToken(User $user): NewAccessToken
+    public function createToken(): NewAccessToken
     {
+        $user = $this->getUser();
+
         return $user->createToken(
             name: $user->name,
             abilities: [$user->role->value]
         );
+    }
+
+    private function getUser(): User
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user;
     }
 }

@@ -9,6 +9,6 @@ Route::as('api:')->group(function () {
      * Auth
      */
     Route::prefix('auth')->as('auth:')->group(
-        base_path('routes/api/auth.php')
+        base_path('routes/api/auth/auth.php')
     );
 });
