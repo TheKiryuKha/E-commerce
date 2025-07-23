@@ -11,12 +11,12 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-final class VerificationLinkMail extends Mailable
+final class AuthorizationCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public function __construct(
-        public readonly string $link
+        public readonly string $code
     ) {}
 
     /**
@@ -29,7 +29,7 @@ final class VerificationLinkMail extends Mailable
                 config()->string('mail.from.address'),
                 config()->string('mail.from.name')
             ),
-            subject: 'Verify Email Address',
+            subject: 'Login in application',
         );
     }
 
@@ -39,7 +39,7 @@ final class VerificationLinkMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.verification-link',
+            markdown: 'mails.authorization-code',
         );
     }
 }

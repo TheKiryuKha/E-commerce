@@ -21,8 +21,6 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read string $name,
  * @property-read UserRole $role,
  * @property-read string $email,
- * @property-read CarbonInterface $email_verified_at,
- * @property-read string $password,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
  * @property-read Collection<int, Product> $products,
