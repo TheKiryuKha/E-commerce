@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Actions\SendAuthCode;
 use App\Http\Requests\Auth\VerifyRequest;
+use App\Http\Responses\AuthCodeResponse;
 use App\Queries\GetUserByEmail;
 use Illuminate\Http\JsonResponse;
 
@@ -15,14 +16,12 @@ final class SendCodeController
         VerifyRequest $request,
         GetUserByEmail $query,
         SendAuthCode $action
-    ): JsonResponse {
+    ): AuthCodeResponse {
 
         $email = $request->string('email')->value();
 
         $action->handle($query->get($email));
 
-        return response()->json([
-            'message' => 'Link with verification code has been sent',
-        ]);
+        return new AuthCodeResponse();
     }
 }
