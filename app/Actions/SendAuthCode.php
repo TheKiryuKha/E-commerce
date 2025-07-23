@@ -6,31 +6,24 @@ namespace App\Actions;
 
 use App\Mail\AuthorizationCodeMail;
 use App\Models\User;
-use App\Queries\IsAuthCodeUnique;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 final readonly class SendAuthCode
 {
     public function __construct(
-        private readonly IsAuthCodeUnique $query
+        private readonly CreateAuthCode $action
     ) {}
 
     public function handle(User $user): void
     {
         DB::transaction(function () use ($user): void {
-            do {
-                $code = (string) random_int(10000, 99999);
 
-            } while ($this->query->handle($code));
-
-            DB::table('auth_tokens')->insert([
-                'code' => $code,
-                'user_id' => $user->id,
-                'expires_at' => now()->addMinutes(5),
-            ]);
-
-            Mail::to($user->email)->send(new AuthorizationCodeMail($code));
+            Mail::to(
+                $user->email
+            )->send(new AuthorizationCodeMail(
+                $this->action->handle($user)
+            ));
         });
     }
 }
