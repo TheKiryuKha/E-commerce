@@ -19,9 +19,7 @@ final class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:1', 'max:20'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'max:25', 'confirmed'],
             'role' => [
                 'sometimes',
                 Rule::enum(UserRole::class)
@@ -33,7 +31,6 @@ final class RegisterRequest extends FormRequest
     public function toDto(): UserDto
     {
         return UserDto::make([
-            'name' => $this->string('name')->toString(),
             'email' => $this->string('email')->toString(),
             'password' => $this->string('password')->toString(),
             'role' => $this->enum(

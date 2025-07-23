@@ -14,9 +14,10 @@ final readonly class CreateUser
     public function handle(UserDto $dto): User
     {
         return DB::transaction(function () use ($dto) {
-            $user = User::create(
-                $dto->toArray()
-            );
+            $user = User::create([
+                ...$dto->toArray(),
+                'name' => $dto->email,
+            ]);
 
             RegisteredUser::dispatch($user);
 
