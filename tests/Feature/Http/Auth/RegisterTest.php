@@ -22,9 +22,7 @@ test('validation works', function () {
     ]);
 
     $response->assertInvalid([
-        'name',
         'email',
-        'password',
         'role',
     ]);
 });
@@ -37,13 +35,12 @@ it('creates new user after registration', function () {
 
     $user = User::first();
 
-    expect($user->name)->toBe('test')
+    expect($user->name)->toBe('test@mail.com')
         ->and($user->email)->toBe('test@mail.com')
-        ->and($user->role)->toBe(UserRole::Customer)
-        ->and($user->email_verified_at)->toBeNull();
+        ->and($user->role)->toBe(UserRole::Customer);
 });
 
-it('return right message fter registration', function () {
+it('return right message after registration', function () {
     $response = $this->post(route('api:auth:register'), $this->user_data);
 
     expect($response->json('message'))->toBeString();

@@ -16,9 +16,9 @@ final readonly class SendAuthCode
         private readonly IsAuthCodeUnique $query
     ) {}
 
-    public function handle(User $user)
+    public function handle(User $user): void
     {
-        DB::transaction(function () use ($user) {
+        DB::transaction(function () use ($user): void {
             do {
                 $code = (string) random_int(10000, 99999);
 

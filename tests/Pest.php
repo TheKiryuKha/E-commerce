@@ -43,7 +43,11 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function createAuthCode(App\Models\User $user, string $code)
 {
-    // ..
+    DB::table('auth_tokens')->insert([
+        'user_id' => $user->id,
+        'code' => $code,
+        'expires_at' => now()->addMinutes(5),
+    ]);
 }

@@ -32,7 +32,6 @@ final class RegisterRequest extends FormRequest
     {
         return UserDto::make([
             'email' => $this->string('email')->toString(),
-            'password' => $this->string('password')->toString(),
             'role' => $this->enum(
                 'role',
                 UserRole::class,

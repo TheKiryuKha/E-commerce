@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class VerifyRequest extends FormRequest
 {
-    public function authorize(): bool
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
     {
-        /** @var User $user */
-        $user = $this->route('user');
-
-        return hash('sha256', $user->email) === $this->route('hash');
+        return [
+            'email' => ['required', 'email', 'exists:users,email'],
+        ];
     }
 }

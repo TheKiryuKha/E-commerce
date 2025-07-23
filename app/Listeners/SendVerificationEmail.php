@@ -8,10 +8,10 @@ use App\Actions\SendAuthCode;
 use App\Events\RegisteredUser;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-final class SendVerificationEmail implements ShouldQueue
+final readonly class SendVerificationEmail implements ShouldQueue
 {
     public function __construct(
-        private readonly SendAuthCode $action
+        private SendAuthCode $action
     ) {}
 
     public function handle(RegisteredUser $event): void

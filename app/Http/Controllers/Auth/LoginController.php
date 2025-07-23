@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\CreateToken;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Responses\TokenResponse;
-use App\Services\IdentityService;
+use App\Queries\GetUserByCode;
 
 final readonly class LoginController
 {
-    public function __construct(
-        private IdentityService $service
-    ) {}
+    public function __invoke(
+        LoginRequest $request,
+        GetUserByCode $query,
+        CreateToken $action
+    ): TokenResponse {
 
-    public function __invoke(LoginRequest $request): TokenResponse
-    {
-        if (! $this->service->login($request->toDTO())) {
-            abort(400);
-        }
+        $user = $query->get(
+            $request->string('code')->value()
+        );
 
         return new TokenResponse(
-            token: $this->service->createToken()
+            $action->handle($user)
         );
     }
 }
