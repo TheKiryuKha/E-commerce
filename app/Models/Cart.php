@@ -7,6 +7,7 @@ namespace App\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at,
  * @property-read Collection<int, Product> $products
+ * @property-read User $user
  */
 final class Cart extends Model
 {
@@ -27,5 +29,13 @@ final class Cart extends Model
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
+    }
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
