@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->foreignIdFor(User::class);
+
+            $table->foreignIdFor(User::class)
+                ->constrained()
+                ->cascadeOnUpdate();
+            
             $table->unsignedBigInteger('price');
             $table->string('status');
             $table->unsignedBigInteger('quantity');
