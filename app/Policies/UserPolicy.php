@@ -8,14 +8,14 @@ use App\Models\User;
 
 final class UserPolicy
 {
-    public function delete(User $user, User $target_user): bool
+    public function delete(User $user, User $targetUser): bool
     {
-        foreach ($target_user->invoices as $invoice) {
+        foreach ($targetUser->invoices as $invoice) {
             if (! $invoice->isProcessed()) {
                 return false;
             }
         }
 
-        return $user->id === $target_user->id;
+        return $user->id === $targetUser->id;
     }
 }
