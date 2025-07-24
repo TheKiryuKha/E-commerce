@@ -8,7 +8,6 @@ use App\Actions\SendAuthCode;
 use App\Http\Requests\Auth\VerifyRequest;
 use App\Http\Responses\AuthCodeResponse;
 use App\Queries\GetUserByEmail;
-use Illuminate\Http\JsonResponse;
 
 final class SendCodeController
 {

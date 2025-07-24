@@ -7,12 +7,10 @@ namespace App\Http\Responses;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
 
-final readonly class AuthCodeResponse implements Responsable
+final readonly class EmptyResponse implements Responsable
 {
     public function toResponse($request): JsonResponse
     {
-        return new JsonResponse(data: [
-            'message' => 'Email with verification code has been sent',
-        ]);
+        return new JsonResponse(status: 204);
     }
 }

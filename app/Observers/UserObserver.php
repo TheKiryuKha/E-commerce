@@ -12,7 +12,7 @@ final class UserObserver implements ShouldQueueAfterCommit
 {
     public function created(User $user): void
     {
-        $cart = Cart::make([
+        $cart = new Cart([
             'amount' => 0,
             'products_amount' => 0,
         ]);

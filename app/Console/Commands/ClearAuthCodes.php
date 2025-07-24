@@ -19,7 +19,7 @@ final class ClearAuthCodes extends Command
      */
     protected $description = 'Deletes all expired authentication codes';
 
-    public function handle()
+    public function handle(): void
     {
         $codes = DB::table('auth_tokens')->where(
             'expires_at', '<', now()

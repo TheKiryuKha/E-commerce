@@ -16,7 +16,7 @@ final readonly class CreateAuthCode
 
     public function handle(User $user): string
     {
-        return DB::transaction(function () use ($user) {
+        return DB::transaction(function () use ($user): string {
             do {
                 $code = (string) random_int(10000, 99999);
 
