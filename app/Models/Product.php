@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property-read int $id,
@@ -48,5 +50,13 @@ final class Product extends Model
     public function history(): HasMany
     {
         return $this->hasMany(History::class);
+    }
+
+    /**
+     * @return BelongsToMany<Invoice, $this, Pivot>
+     */
+    public function invoices(): BelongsToMany
+    {
+        return $this->belongsToMany(Invoice::class);
     }
 }

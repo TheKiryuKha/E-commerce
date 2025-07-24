@@ -7,10 +7,10 @@ namespace App\Listeners;
 use App\Actions\CreateCart;
 use App\Events\RegisteredUser;
 
-final class CreateCartForUser
+final readonly class CreateCartForUser
 {
     public function __construct(
-        private readonly CreateCart $action
+        private CreateCart $action
     ) {}
 
     public function handle(RegisteredUser $event): void

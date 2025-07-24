@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)
                 ->constrained()
                 ->cascadeOnUpdate();
-                
+
             $table->unsignedBigInteger('amount');
             $table->unsignedBigInteger('products_amount');
             $table->timestamps();

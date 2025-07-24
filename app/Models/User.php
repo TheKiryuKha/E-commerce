@@ -22,10 +22,12 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read UserRole $role,
  * @property-read string $email,
  * @property-read CarbonInterface $created_at,
- * @property-read CarbonInterface $updated_at,
+ * @property-read ?CarbonInterface $updated_at,
  * @property-read Collection<int, Product> $products,
  * @property-read Collection<int, History> $history,
  * @property-read Collection<int, PersonalAccessToken> $tokens
+ * @property-read Collection<int, Invoice> $invoices,
+ * @property-read Collection<int, Invoice> $purchases
  */
 final class User extends Authenticatable
 {
@@ -79,6 +81,22 @@ final class User extends Authenticatable
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * @return HasMany<Invoice, $this>
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'customer_id');
+    }
+
+    /**
+     * @return HasMany<Invoice, $this>
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'vendor_id');
     }
 
     /**

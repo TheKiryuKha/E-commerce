@@ -21,12 +21,20 @@ final class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'customer_id' => User::factory(),
+            'vendor_id' => User::factory()->vendor(),
             'cost' => random_int(10, 10000),
             'address' => fake()->address(),
             'user_telephone' => fake()->phoneNumber(),
             'user_email' => fake()->email(),
-            'status' => InvoiceStatus::Paid,
+            'status' => InvoiceStatus::Received,
         ];
+    }
+
+    public function paid(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => InvoiceStatus::Paid,
+        ]);
     }
 }

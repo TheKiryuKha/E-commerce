@@ -25,4 +25,11 @@ final class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
         ];
     }
+
+    public function vendor(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'role' => UserRole::Vendor,
+        ]);
+    }
 }
