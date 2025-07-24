@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\DTOs\UserDto;
+use App\Enums\UserStatus;
 use App\Events\RegisteredUser;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ final readonly class CreateUser
             $user = User::create([
                 ...$dto->toArray(),
                 'name' => $dto->email,
+                'status' => UserStatus::Active,
             ]);
 
             RegisteredUser::dispatch($user);

@@ -6,6 +6,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read int $id,
  * @property-read string $name,
  * @property-read UserRole $role,
+ * @property-read UserStatus $status,
  * @property-read string $email,
  * @property-read CarbonInterface $created_at,
  * @property-read ?CarbonInterface $updated_at,
@@ -34,22 +36,12 @@ final class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -57,6 +49,9 @@ final class User extends Authenticatable
 
     protected $casts = [
         'role' => UserRole::class,
+        'status' => UserStatus::class,
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     /**
@@ -97,18 +92,5 @@ final class User extends Authenticatable
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class, 'vendor_id');
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }
