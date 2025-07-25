@@ -7,6 +7,7 @@ Route::patch('/{user}', 'update')->name('update');
 Route::delete('/{user}', 'destroy')->name('delete');
 
 Route::patch('/{user}/status', 'updateStatus')->name('updateStatus');
+Route::patch('/{user}/role', 'updateRole')->name('updateRole');
 
 Route::controller(AdminController::class)->group(function () {
 

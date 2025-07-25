@@ -7,7 +7,9 @@ namespace App\Http\Controllers;
 use App\Actions\DeleteUser;
 use App\Actions\EditUser;
 use App\Actions\EditUserStatus;
+use App\Enums\UserRole;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\UpdateRoleRequest;
 use App\Http\Requests\User\UpdateStatusRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\EmptyResponse;
@@ -34,6 +36,23 @@ final readonly class UserController
         Gate::authorize('updateUserStatus', User::class);
 
         $action->handle($user, $request->getData());
+
+        return new UserResource($user);
+    }
+
+    public function updateRole(User $user, UpdateRoleRequest $request): UserResource
+    {
+        Gate::authorize('updateRole', $user);
+
+        // action and lisneters
+        $user->update(
+            $request->toDto()->toArray()
+        );
+
+        if ($user->role === UserRole::Customer) {
+            // сравнение с предыдущими данными
+            $user->products()->delete();
+        }
 
         return new UserResource($user);
     }

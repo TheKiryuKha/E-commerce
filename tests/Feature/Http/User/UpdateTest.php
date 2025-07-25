@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\UserRole;
 use App\Models\Invoice;
-use App\Models\Product;
 use App\Models\User;
 
 test('validation works', function () {
@@ -34,34 +32,6 @@ test('user cannot update different user', function () {
 
     $response->assertStatus(403);
 });
-
-// TODO move it to next updateRoleTest
-
-// test('user(customer) can become vendor', function () {
-//     $user = User::factory()->create();
-
-//     $this->actingAs($user)->patch(
-//         route('api:users:update', $user),
-//         ['role' => UserRole::Vendor->value]
-//     )->assertStatus(200);
-
-//     expect($user->refresh()->role)->toBe(UserRole::Vendor);
-// });
-
-// test('user(vendor) can stop being vendor', function () {
-//     $user = User::factory()->vendor()->create();
-//     Product::factory()->for($user)->create();
-
-//     $this->actingAs($user)->patch(
-//         route('api:users:update', $user),
-//         ['role' => UserRole::Customer->value]
-//     )->assertStatus(200);
-
-//     $user->refresh();
-
-//     expect($user->role)->toBe(UserRole::Customer)
-//         ->and($user->products()->count())->toBe(0);
-// });
 
 test('user(customer) can change his name', function () {
     $user = User::factory()->create();
