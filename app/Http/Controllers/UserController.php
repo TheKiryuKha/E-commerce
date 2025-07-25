@@ -10,8 +10,10 @@ use App\Events\V1\UserUpdatedStatus;
 use App\Http\Requests\V1\User\UpdateStatusRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\EmptyResponse;
+use App\Mail\V1\BannedUserMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 final readonly class UserController
 {
@@ -27,6 +29,10 @@ final readonly class UserController
 
         // уведомление(updated user(данные, сам юзер) )
         UserUpdatedStatus::dispatch($user);
+
+        // Mail::to($user->email)->send(
+        //         new BannedUserMail($user)
+        //     );
 
         // слушатель, который в зависимости от саттуса пользователя отправит ему письмо
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 use App\Enums\UserStatus;
 use App\Events\V1\UserUpdatedStatus;
+use App\Listeners\V1\SendUserStatusEmail;
 use App\Mail\V1\BannedUserMail;
 use App\Mail\V1\UnbannedUserMail;
 use App\Models\User;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
 
 beforeEach(function () {
@@ -48,14 +48,25 @@ test('admin can ban user', function () {
 
     expect($this->user->refresh()->status)->toBe(UserStatus::Banned);
 
-    Event::assertDispatched(UserUpdatedStatus::class);
-    // Mail::assertSent(BannedUserMail::class);
+    Event::assertDispatched(UserUpdatedStatus::class, function (UserUpdatedStatus $event) {
+        (new SendUserStatusEmail())->handle($event);
+
+        return true;
+    });
+
+    Mail::assertSent(BannedUserMail::class, function (BannedUserMail $mail) {
+        $this->assertEquals($mail->envelope()->subject, 'Banned in application');
+        $this->assertEquals($mail->content()->markdown, 'mails.banned-user');
+        $this->assertEquals($this->user->email, $mail->to[0]['address']);
+        $this->assertEquals($this->user->id, $mail->user->id);
+
+        return true;
+    });
 });
 
 test('admin can unban user', function () {
     Mail::fake();
     Event::fake();
-    Bus::fake();
     $user = User::factory()->banned()->create();
 
     $response = $this->actingAs($this->admin)->patch(
@@ -67,6 +78,18 @@ test('admin can unban user', function () {
 
     expect($user->refresh()->status)->toBe(UserStatus::Active);
 
-    Event::assertDispatched(UserUpdatedStatus::class);
-    // Mail::assertSent(UnbannedUserMail::class);
+    Event::assertDispatched(UserUpdatedStatus::class, function (UserUpdatedStatus $event) {
+        (new SendUserStatusEmail())->handle($event);
+
+        return true;
+    });
+
+    Mail::assertSent(UnbannedUserMail::class, function (UnbannedUserMail $mail) use ($user) {
+        $this->assertEquals($mail->envelope()->subject, 'Unbanned in application');
+        $this->assertEquals($mail->content()->markdown, 'mails.unbanned-user');
+        $this->assertEquals($user->email, $mail->to[0]['address']);
+        $this->assertEquals($user->id, $mail->user->id);
+
+        return true;
+    });
 });
