@@ -20,4 +20,15 @@ final class UpdateStatusRequest extends FormRequest
             'message' => ['sometimes', 'string', 'min:1', 'max:255'],
         ];
     }
+
+    /**
+     * @return array{status: UserStatus, message: string}
+     */
+    public function getData(): array
+    {
+        return [
+            'status' => UserStatus::from($this->string('status')->value()),
+            'message' => $this->string('message')->value(),
+        ];
+    }
 }
