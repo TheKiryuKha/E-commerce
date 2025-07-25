@@ -17,7 +17,7 @@ final class SendUserStatusEmail implements ShouldQueue
     {
         if ($event->user->status === UserStatus::Banned) {
             Mail::to($event->user->email)->send(
-                new BannedUserMail($event->user)
+                new BannedUserMail($event->user, $event->message)
             );
         } else {
             Mail::to($event->user->email)->send(

@@ -17,7 +17,8 @@ final class BannedUserMail extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        public User $user
+        public readonly User $user,
+        public readonly string $message
     ) {}
 
     public function envelope(): Envelope

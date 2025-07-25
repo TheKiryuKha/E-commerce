@@ -41,7 +41,10 @@ test('admin can ban user', function () {
 
     $response = $this->actingAs($this->admin)->patch(
         route('api:v1:users:updateStatus', $this->user),
-        ['status' => 'banned']
+        [
+            'status' => 'banned',
+            'message' => 'You dont follow our rules',
+        ]
     );
 
     $response->assertStatus(200);
@@ -59,6 +62,8 @@ test('admin can ban user', function () {
         $this->assertEquals($mail->content()->markdown, 'mails.banned-user');
         $this->assertEquals($this->user->email, $mail->to[0]['address']);
         $this->assertEquals($this->user->id, $mail->user->id);
+
+        $this->assertEquals($mail->message, 'You dont follow our rules');
 
         return true;
     });

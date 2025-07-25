@@ -2,7 +2,7 @@
 
     # Hello, {{$user->name}} !
 
-    You have been banned in our application. Reason: 'TODO'
+    You have been banned in our application. Reason: {{$message}}
 
     If you do not agree, you can always challenge the administration's decision
     by writing to us: {{ config('mail.from.address') }}
