@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Listeners\V1;
+namespace App\Listeners;
 
 use App\Enums\UserStatus;
-use App\Events\V1\UserUpdatedStatus;
-use App\Mail\V1\BannedUserMail;
-use App\Mail\V1\UnbannedUserMail;
+use App\Events\UserUpdatedStatus;
+use App\Mail\BannedUserMail;
+use App\Mail\UnbannedUserMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers;
 
 use App\Actions\EditUserStatus;
-use App\Http\Requests\V1\User\UpdateStatusRequest;
+use App\Http\Requests\User\UpdateStatusRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;

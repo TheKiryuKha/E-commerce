@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-use App\Http\Controllers\V1\AdminController;
+use App\Http\Controllers\AdminController;
 
 Route::delete('/{user}', 'destroy')->name('delete');
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\V1\User;
+namespace App\Http\Requests\User;
 
 use App\Enums\UserStatus;
 use Illuminate\Foundation\Http\FormRequest;

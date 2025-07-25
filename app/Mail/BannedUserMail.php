@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Mail\V1;
+namespace App\Mail;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -12,12 +12,13 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-final class UnbannedUserMail extends Mailable
+final class BannedUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public function __construct(
-        public User $user
+        public readonly User $user,
+        public readonly string $message
     ) {}
 
     public function envelope(): Envelope
@@ -27,14 +28,14 @@ final class UnbannedUserMail extends Mailable
                 config()->string('mail.from.address'),
                 config()->string('mail.from.name')
             ),
-            subject: 'Unbanned in application',
+            subject: 'Banned in application',
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.unbanned-user',
+            markdown: 'mails.banned-user',
         );
     }
 }

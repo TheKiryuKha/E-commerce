@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Enums\UserStatus;
-use App\Events\V1\UserUpdatedStatus;
+use App\Events\UserUpdatedStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 

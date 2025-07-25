@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use App\Enums\UserStatus;
-use App\Events\V1\UserUpdatedStatus;
-use App\Listeners\V1\SendUserStatusEmail;
-use App\Mail\V1\BannedUserMail;
-use App\Mail\V1\UnbannedUserMail;
+use App\Events\UserUpdatedStatus;
+use App\Listeners\SendUserStatusEmail;
+use App\Mail\BannedUserMail;
+use App\Mail\UnbannedUserMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Event;
 
