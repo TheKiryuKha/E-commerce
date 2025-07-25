@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserRole;
+use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\User;
 
@@ -11,15 +12,11 @@ test('validation works', function () {
 
     $response = $this->actingAs($user)->patch(
         route('api:users:update', $user),
-        [
-            'name' => 1212,
-            'role' => 'wrong_role',
-        ]
+        ['name' => 1212]
     );
 
     $response->assertInvalid([
         'name',
-        'role',
     ]);
 });
 
@@ -38,33 +35,35 @@ test('user cannot update different user', function () {
     $response->assertStatus(403);
 });
 
-test('user(customer) can become vendor', function () {
-    $user = User::factory()->create();
+// TODO move it to next updateRoleTest
 
-    $this->actingAs($user)->patch(
-        route('api:users:update', $user),
-        ['role' => UserRole::Vendor->value]
-    )->assertStatus(200);
+// test('user(customer) can become vendor', function () {
+//     $user = User::factory()->create();
 
-    expect($user->refresh()->role)->toBe(UserRole::Vendor);
-});
+//     $this->actingAs($user)->patch(
+//         route('api:users:update', $user),
+//         ['role' => UserRole::Vendor->value]
+//     )->assertStatus(200);
 
-test('user(vendor) can stop being vendor', function () {
-    $user = User::factory()->vendor()->create();
-    Product::factory()->for($user)->create();
+//     expect($user->refresh()->role)->toBe(UserRole::Vendor);
+// });
 
-    $this->actingAs($user)->patch(
-        route('api:users:update', $user),
-        ['role' => UserRole::Customer->value]
-    )->assertStatus(200);
+// test('user(vendor) can stop being vendor', function () {
+//     $user = User::factory()->vendor()->create();
+//     Product::factory()->for($user)->create();
 
-    $user->refresh();
+//     $this->actingAs($user)->patch(
+//         route('api:users:update', $user),
+//         ['role' => UserRole::Customer->value]
+//     )->assertStatus(200);
 
-    expect($user->role)->toBe(UserRole::Customer)
-        ->and($user->products()->count())->toBe(0);
-});
+//     $user->refresh();
 
-test('user can change his name', function () {
+//     expect($user->role)->toBe(UserRole::Customer)
+//         ->and($user->products()->count())->toBe(0);
+// });
+
+test('user(customer) can change his name', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)->patch(
@@ -73,4 +72,38 @@ test('user can change his name', function () {
     )->assertStatus(200);
 
     expect($user->refresh()->name)->toBe('Test');
+});
+
+test('user(vendor) with unproccessed invoices can change his name', function () {
+    $user = User::factory()->vendor()->create();
+    Invoice::factory()->paid()->for($user, 'vendor')->create();
+
+    $this->actingAs($user)->patch(
+        route('api:users:update', $user),
+        ['name' => 'test']
+    )->assertStatus(200);
+
+    expect($user->refresh()->name)->toBe('test');
+});
+
+test('user(admin) can change his name', function () {
+    $user = User::factory()->admin()->create();
+
+    $this->actingAs($user)->patch(
+        route('api:users:update', $user),
+        ['name' => 'test']
+    )->assertStatus(200);
+
+    expect($user->refresh()->name)->toBe('test');
+});
+
+test('user(vendor) can update his name', function () {
+    $user = User::factory()->vendor()->create();
+
+    $this->actingAs($user)->patch(
+        route('api:users:update', $user),
+        ['name' => 'test']
+    )->assertStatus(200);
+
+    expect($user->refresh()->name)->toBe('test');
 });
