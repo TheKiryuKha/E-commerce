@@ -19,7 +19,7 @@ it('deletes user', function () {
     }
 
     $this->actingAs($user)
-        ->delete(route('api:v1:users:delete', $user))
+        ->delete(route('api:users:delete', $user))
         ->assertStatus(204);
 
     $this->assertFalse(
@@ -43,6 +43,6 @@ test('user cannot exit, if he has unprocessed orders', function () {
     $user->invoices()->save($invoice);
 
     $this->actingAs($user)
-        ->delete(route('api:v1:users:delete', $user))
+        ->delete(route('api:users:delete', $user))
         ->assertStatus(403);
 });
