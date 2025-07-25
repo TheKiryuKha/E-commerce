@@ -18,11 +18,11 @@ final readonly class CreateAdmin
     public function handle(UserDto $dto): User
     {
         return DB::transaction(function () use ($dto): User {
-            
+
             $user = $this->action->handle($dto);
 
             $user->update([
-                'role' => UserRole::Admin
+                'role' => UserRole::Admin,
             ]);
 
             return $user;

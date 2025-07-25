@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\UserRole;
 use App\Events\RegisteredUser;
 use App\Models\User;
@@ -12,7 +14,7 @@ test('validation works', function () {
         ->post(route('api:users:admins:store'));
 
     $response->assertInvalid([
-        'email'
+        'email',
     ]);
 });
 
@@ -20,16 +22,16 @@ test('non admin cannot create admin', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)->post(route(
-            'api:users:admins:store',
-            ['email' => 'fakemail@mail.com']
-        ))->assertStatus(
-            403
-        );
+        'api:users:admins:store',
+        ['email' => 'fakemail@mail.com']
+    ))->assertStatus(
+        403
+    );
 });
 
 test('admin can create new admin', function () {
     Event::fake();
-    
+
     $this->actingAs($this->admin)->post(route(
         'api:users:admins:store',
         ['email' => 'test@mail.com']

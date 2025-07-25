@@ -23,4 +23,9 @@ final class UserPolicy
     {
         return $user->isAdmin();
     }
+
+    public function deleteAdmin(User $user): bool
+    {
+        return $user->isAdmin();
+    }
 }
