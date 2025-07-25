@@ -5,7 +5,10 @@ use App\Http\Controllers\AdminController;
 
 Route::delete('/{user}', 'destroy')->name('delete');
 
-Route::patch(
-    '/{user}/status',
-    [AdminController::class, 'updateUserStatus']
-)->name('updateStatus');
+Route::controller(AdminController::class)->group(function () {
+
+    Route::patch('/{user}/status', 'updateUserStatus')->name('updateStatus');
+
+    Route::post("/admin", 'store')->name('admins:store');
+});
+

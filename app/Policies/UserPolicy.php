@@ -18,4 +18,9 @@ final class UserPolicy
         return $user->id === $targetUser->id
             && $targetUser->isDischarged();
     }
+
+    public function createAdmin(User $user): bool
+    {
+        return $user->isAdmin();
+    }
 }
