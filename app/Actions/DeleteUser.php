@@ -11,7 +11,7 @@ final readonly class DeleteUser
 {
     public function handle(User $user): void
     {
-        DB::transaction(function () use ($user) {
+        DB::transaction(function () use ($user): void {
             $user->cart()->delete();
 
             $user->products()->delete();

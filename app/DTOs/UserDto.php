@@ -5,20 +5,23 @@ declare(strict_types=1);
 namespace App\DTOs;
 
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 
 final readonly class UserDto
 {
     public function __construct(
         public ?string $name,
         public ?UserRole $role,
-        public string $email
+        public ?UserStatus $status,
+        public ?string $email
     ) {}
 
     /**
      * @param array{
      * name?: ?string,
      * role?: ?UserRole,
-     * email: string
+     * email?: ?string,
+     * status?: ?UserStatus
      * } $attr
      */
     public static function make(array $attr): self
@@ -26,7 +29,8 @@ final readonly class UserDto
         return new self(
             name: $attr['name'] ?? null,
             role: $attr['role'] ?? null,
-            email: $attr['email']
+            status: $attr['status'] ?? null,
+            email: $attr['email'] ?? null
         );
     }
 
@@ -39,6 +43,7 @@ final readonly class UserDto
             'name' => $this->name,
             'role' => $this->role,
             'email' => $this->email,
+            'status' => $this->status,
         ];
     }
 }

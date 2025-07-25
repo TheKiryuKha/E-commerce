@@ -34,4 +34,18 @@ final class UserFactory extends Factory
             'role' => UserRole::Vendor,
         ]);
     }
+
+    public function admin(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'role' => UserRole::Admin,
+        ]);
+    }
+
+    public function banned(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => UserStatus::Banned,
+        ]);
+    }
 }
