@@ -3,6 +3,7 @@
 declare(strict_types=1);
 use App\Http\Controllers\AdminController;
 
+Route::patch('/{user}', 'update')->name('update');
 Route::delete('/{user}', 'destroy')->name('delete');
 
 Route::patch('/{user}/status', 'updateStatus')->name('updateStatus');

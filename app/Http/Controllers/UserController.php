@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\DeleteUser;
+use App\Actions\EditUser;
 use App\Actions\EditUserStatus;
+use App\Http\Requests\User\UpdateRequest;
 use App\Http\Requests\User\UpdateStatusRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\EmptyResponse;
@@ -14,6 +16,15 @@ use Illuminate\Support\Facades\Gate;
 
 final readonly class UserController
 {
+    public function update(User $user, UpdateRequest $request, EditUser $action): UserResource
+    {
+        Gate::authorize('update', $user);
+
+        $action->handle($user, $request->toDto());
+
+        return new UserResource($user);
+    }
+
     public function updateStatus(
         User $user,
         UpdateStatusRequest $request,

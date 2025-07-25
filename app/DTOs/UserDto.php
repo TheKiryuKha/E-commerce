@@ -39,11 +39,11 @@ final readonly class UserDto
      */
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'name' => $this->name,
             'role' => $this->role,
             'email' => $this->email,
             'status' => $this->status,
-        ];
+        ], fn ($attr): bool => $attr !== null);
     }
 }

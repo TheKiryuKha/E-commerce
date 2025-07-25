@@ -19,6 +19,12 @@ final class UserPolicy
             && $targetUser->isDischarged();
     }
 
+    public function update(User $user, User $targetUser): bool
+    {
+        return $user->id === $targetUser->id
+            && $targetUser->isDischarged();
+    }
+
     public function createAdmin(User $user): bool
     {
         return $user->isAdmin();
