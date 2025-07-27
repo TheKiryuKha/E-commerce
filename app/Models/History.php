@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\HistoryStatus;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class History extends Model
 {
+    /** @use HasFactory<\Database\Factories\HistoryFactory> */
+    use HasFactory;
+
     protected $casts = [
         'status' => HistoryStatus::class,
     ];
