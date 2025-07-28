@@ -14,14 +14,10 @@ final readonly class CreateCart
     {
         return DB::transaction(function () use ($user): Cart {
 
-            $cart = new Cart([
+            return $user->cart()->create([
                 'amount' => 0,
                 'products_amount' => 0,
             ]);
-
-            $user->cart()->save($cart);
-
-            return $cart;
         });
     }
 }
