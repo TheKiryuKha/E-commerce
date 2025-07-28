@@ -12,12 +12,9 @@ final readonly class CreateCart
 {
     public function handle(User $user): Cart
     {
-        return DB::transaction(function () use ($user): Cart {
-
-            return $user->cart()->create([
-                'amount' => 0,
-                'products_amount' => 0,
-            ]);
-        });
+        return DB::transaction(fn (): Cart => $user->cart()->create([
+            'amount' => 0,
+            'products_amount' => 0,
+        ]));
     }
 }

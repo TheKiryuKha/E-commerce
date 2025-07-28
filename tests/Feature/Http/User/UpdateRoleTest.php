@@ -11,7 +11,7 @@ test('user(customer) can become vendor', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)->patch(
-        route('api:users:updateRole', $user),
+        route('api:users:role:update', $user),
         ['role' => UserRole::Vendor->value]
     )->assertStatus(200);
 
@@ -23,7 +23,7 @@ test('user(vendor) can stop being vendor', function () {
     Product::factory()->for($user)->create();
 
     $this->actingAs($user)->patch(
-        route('api:users:updateRole', $user),
+        route('api:users:role:update', $user),
         ['role' => UserRole::Customer->value]
     )->assertStatus(200);
 
@@ -38,7 +38,7 @@ test('user(vendor) cannot stop being vendor, if he has unprocessed invoices', fu
     Invoice::factory(3)->paid()->for($user, 'vendor')->create();
 
     $this->actingAs($user)->patch(
-        route('api:users:updateRole', $user),
+        route('api:users:role:update', $user),
         ['role' => UserRole::Customer->value]
     )->assertStatus(403);
 });

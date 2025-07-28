@@ -17,7 +17,7 @@ beforeEach(function () {
 
 test('validation works', function () {
     $response = $this->actingAs($this->admin)
-        ->patch(route('api:users:updateStatus', $this->user));
+        ->patch(route('api:users:status:update', $this->user));
 
     $response->assertInvalid([
         'status',
@@ -28,7 +28,7 @@ test('non admin cannot ban users', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)->patch(
-        route('api:users:updateStatus', $this->admin),
+        route('api:users:status:update', $this->admin),
         ['status' => 'banned']
     )->assertStatus(
         403
@@ -40,7 +40,7 @@ test('admin can ban user', function () {
     Event::fake();
 
     $response = $this->actingAs($this->admin)->patch(
-        route('api:users:updateStatus', $this->user),
+        route('api:users:status:update', $this->user),
         [
             'status' => 'banned',
             'message' => 'You dont follow our rules',
@@ -75,7 +75,7 @@ test('admin can unban user', function () {
     $user = User::factory()->banned()->create();
 
     $response = $this->actingAs($this->admin)->patch(
-        route('api:users:updateStatus', $user),
+        route('api:users:status:update', $user),
         ['status' => 'active']
     );
 

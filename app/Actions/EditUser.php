@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 final readonly class EditUser
 {
-    public function handle(User $user, UserDto $dto): void
+    public function handle(User $user, UserDto $dto): User
     {
-        DB::transaction(function () use ($user, $dto): void {
+        return DB::transaction(function () use ($user, $dto): User {
 
             $user->update(
                 $dto->toArray()
             );
 
-            $user->products()->delete();
+            return $user;
         });
     }
 }

@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->as('api:')->group(function () {
 
-    Route::prefix('users')->as('users:')->controller(UserController::class)->group(
+    Route::prefix('users')->as('users:')->group(
         base_path('routes/api/users.php')
     );
 
