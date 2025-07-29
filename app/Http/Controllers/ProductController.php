@@ -9,6 +9,7 @@ use App\Actions\EditProduct;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Responses\EmptyResponse;
 use App\Models\Product;
 use App\Models\User;
 use App\Queries\ProductQuery;
@@ -53,5 +54,14 @@ final class ProductController
         ));
 
         return new ProductResource($product->first());
+    }
+
+    public function destroy(Product $product): EmptyResponse
+    {
+        Gate::authorize('delete', $product);
+
+        $product->delete();
+
+        return new EmptyResponse();
     }
 }

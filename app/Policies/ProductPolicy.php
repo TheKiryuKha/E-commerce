@@ -18,4 +18,9 @@ final class ProductPolicy
     {
         return $user->id === $product->user_id;
     }
+
+    public function delete(User $user, Product $product): bool
+    {
+        return $user->id === $product->user_id;
+    }
 }
