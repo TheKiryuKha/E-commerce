@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\CreateProduct;
+use App\Actions\EditProduct;
 use App\Http\Requests\Product\StoreRequest;
+use App\Http\Requests\Product\UpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\User;
@@ -30,6 +32,15 @@ final class ProductController
         $user = auth()->user();
 
         $product = $action->handle($user, $request->toDto());
+
+        return new ProductResource($product);
+    }
+
+    public function update(Product $product, UpdateRequest $request, EditProduct $action): ProductResource
+    {
+        Gate::authorize('edit', $product);
+
+        $action->handle($product, $request->toDto());
 
         return new ProductResource($product);
     }
