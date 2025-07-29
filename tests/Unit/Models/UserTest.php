@@ -23,6 +23,7 @@ test('to array', function () {
         'updated_at',
         'deleted_at',
         'status',
+        'logged_at',
     ]);
 });
 
