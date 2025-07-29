@@ -8,6 +8,7 @@ use App\Http\Controllers\UserEmailController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\UserStatusController;
 
+Route::get('/', [UserController::class, 'index'])->name('index');
 Route::patch('/{user}', [UserController::class, 'update'])->name('update');
 Route::delete('/{user}', [UserController::class, 'destroy'])->name('delete');
 

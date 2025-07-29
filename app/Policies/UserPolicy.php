@@ -8,6 +8,11 @@ use App\Models\User;
 
 final class UserPolicy
 {
+    public function viewAny(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
     public function updateUserStatus(User $user): bool
     {
         return $user->isAdmin();
