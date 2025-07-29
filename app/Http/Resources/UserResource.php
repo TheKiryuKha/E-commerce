@@ -36,7 +36,8 @@ final class UserResource extends JsonResource
                 // TODO
             ],
             'links' => [
-                // TODO
+                'parent' => route('api:users:index'),
+                'self' => route('api:users:show', $this->resource),
             ],
         ];
     }

@@ -10,6 +10,7 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\EmptyResponse;
 use App\Models\User;
+use App\Queries\GetUser;
 use App\Queries\GetUsers;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
@@ -21,6 +22,15 @@ final readonly class UserController
         Gate::authorize('viewAny', User::class);
 
         return UserResource::collection($query->get());
+    }
+
+    public function show(User $user, GetUser $query): UserResource
+    {
+        Gate::authorize('view', User::class);
+
+        return new UserResource(
+            $query->get($user)
+        );
     }
 
     public function update(User $user, UpdateRequest $request, EditUser $action): UserResource

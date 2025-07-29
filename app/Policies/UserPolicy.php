@@ -13,6 +13,11 @@ final class UserPolicy
         return $user->isAdmin();
     }
 
+    public function view(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
     public function updateUserStatus(User $user): bool
     {
         return $user->isAdmin();
