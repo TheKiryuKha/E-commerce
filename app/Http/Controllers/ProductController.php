@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateProduct;
+use App\Http\Requests\Product\StoreRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\User;
 use App\Queries\ProductQuery;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 
 final class ProductController
 {
@@ -16,6 +20,18 @@ final class ProductController
         $products = $query->get(Product::query());
 
         return ProductResource::collection($products->get());
+    }
+
+    public function store(StoreRequest $request, CreateProduct $action): ProductResource
+    {
+        Gate::authorize('create', Product::class);
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        $product = $action->handle($user, $request->toDto());
+
+        return new ProductResource($product);
     }
 
     public function show(Product $product, ProductQuery $query): ProductResource

@@ -14,6 +14,12 @@ trait UserFilter
             && $this->tokenCan(UserRole::Admin->value);
     }
 
+    public function isVendor(): bool
+    {
+        return $this->role === UserRole::Vendor
+            && $this->tokenCan(UserRole::Vendor->value);
+    }
+
     public function isDischarged(): bool
     {
         foreach ($this->invoices as $invoice) {
