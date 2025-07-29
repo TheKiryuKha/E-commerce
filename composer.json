@@ -61,6 +61,18 @@
         ],
         "lint": "pint",
         "refactor": ["Composer\\Config::disableProcessTimeout", "php -d memory_limit=-1 vendor/bin/rector"],
+        
+        "fix": [
+            "@refactor",
+            "@lint"
+        ],
+
+        "commit": [
+            "@test:unit",
+            "@test:types",
+            "@fix"
+        ],
+        
         "test:lint": "pint --test",
         "test:refactor": "php -d memory_limit=-1 vendor/bin/rector --dry-run",
         "test:types": "phpstan analyse --memory-limit=-1",
