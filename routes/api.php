@@ -10,6 +10,10 @@ Route::middleware('auth:sanctum')->as('api:')->group(function () {
         base_path('routes/api/users.php')
     );
 
+    Route::prefix('products')->as('products:')->group(
+        base_path('routes/api/products.php')
+    );
+
 });
 
 /**

@@ -23,8 +23,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property-read ProductStatus $status,
  * @property-read int $quantity,
  * @property-read CarbonInterface $created_at,
- * @property-read CarbonInterface $updated_at,
- * @property-read CarbonInterface $deleted_at,
+ * @property-read ?CarbonInterface $updated_at,
+ * @property-read ?CarbonInterface $deleted_at,
  * @property-read User $user,
  * @property-read Collection<int, History> $history
  */

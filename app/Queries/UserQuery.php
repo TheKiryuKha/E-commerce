@@ -5,20 +5,24 @@ declare(strict_types=1);
 namespace App\Queries;
 
 use App\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-final readonly class GetUsers
+final readonly class UserQuery
 {
-    public function get(): LengthAwarePaginator
+    /**
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
+    public function get(Builder $query): Builder
     {
         return QueryBuilder::for(
-            User::query()
+            $query
         )->allowedIncludes(
             []
         )->allowedFilters(
             AllowedFilter::exact('role')
-        )->paginate(10);
+        )->getEloquentBuilder();
     }
 }

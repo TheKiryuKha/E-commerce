@@ -10,27 +10,31 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\EmptyResponse;
 use App\Models\User;
-use App\Queries\GetUser;
-use App\Queries\GetUsers;
+use App\Queries\UserQuery;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 
 final readonly class UserController
 {
-    public function index(GetUsers $query): AnonymousResourceCollection
+    public function index(UserQuery $query): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', User::class);
 
-        return UserResource::collection($query->get());
+        $users = $query->get(User::query());
+
+        return UserResource::collection($users->paginate(10));
     }
 
-    public function show(User $user, GetUser $query): UserResource
+    public function show(User $user, UserQuery $query): UserResource
     {
         Gate::authorize('view', User::class);
 
-        return new UserResource(
-            $query->get($user)
-        );
+        $user = $query->get(User::query()->where(
+            'id',
+            $user->id
+        ));
+
+        return new UserResource($user->first());
     }
 
     public function update(User $user, UpdateRequest $request, EditUser $action): UserResource
