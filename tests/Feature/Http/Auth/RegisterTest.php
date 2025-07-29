@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Event;
 beforeEach(function () {
     $this->user_data = [
         'name' => 'test',
+        'role' => 'customer',
         'email' => 'test@mail.com',
         'password' => 'test_password',
         'password_confirmation' => 'test_password',

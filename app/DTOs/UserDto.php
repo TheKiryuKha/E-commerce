@@ -46,4 +46,24 @@ final readonly class UserDto
             'status' => $this->status,
         ], fn ($attr): bool => $attr !== null);
     }
+
+    public function withName(string $name): self
+    {
+        return new self(
+            $name,
+            $this->role,
+            $this->status,
+            $this->email
+        );
+    }
+
+    public function withEmail(string $email): self
+    {
+        return new self(
+            $this->name,
+            $this->role,
+            $this->status,
+            $email
+        );
+    }
 }

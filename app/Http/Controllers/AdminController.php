@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreateAdmin;
 use App\Actions\DeleteUser;
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\User\CreateAdminRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\EmptyResponse;
 use App\Models\User;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Gate;
 
 final class AdminController
 {
-    public function store(RegisterRequest $request, CreateAdmin $action): UserResource
+    public function store(CreateAdminRequest $request, CreateAdmin $action): UserResource
     {
         Gate::authorize('createAdmin', User::class);
 

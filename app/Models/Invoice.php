@@ -55,12 +55,4 @@ final class Invoice extends Model
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
-
-    /**
-     * @return BelongsTo<User, $this>
-     */
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'customer_id');
-    }
 }
