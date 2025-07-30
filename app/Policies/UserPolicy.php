@@ -40,6 +40,11 @@ final class UserPolicy
         return $user->id === $targetUser->id;
     }
 
+    public function seeProducts(User $user, User $targetUser): bool
+    {
+        return $user->id === $targetUser->id;
+    }
+
     public function createAdmin(User $user): bool
     {
         return $user->isAdmin();

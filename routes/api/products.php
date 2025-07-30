@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductSeeController;
 use App\Http\Controllers\UserProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,4 @@ Route::put('/{product}', [ProductController::class, 'update'])->name('update');
 Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
 
 Route::get('/user/{user}', UserProductsController::class)->name('user:index');
+Route::get('/{user}/see/{product}', ProductSeeController::class)->name('see');
