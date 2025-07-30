@@ -45,16 +45,6 @@ final class UserPolicy
         return $user->id === $targetUser->id;
     }
 
-    public function addProductsToCart(User $user, User $targetUser): bool
-    {
-        return $user->id === $targetUser->id;
-    }
-
-    public function removeProductsFromCart(User $user, User $targetUser): bool
-    {
-        return $user->id === $targetUser->id;
-    }
-
     public function createAdmin(User $user): bool
     {
         return $user->isAdmin();

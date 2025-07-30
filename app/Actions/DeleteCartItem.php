@@ -10,17 +10,19 @@ use Illuminate\Support\Facades\DB;
 
 final readonly class DeleteCartItem
 {
-    public function handle(Cart $cart, Product $product): void
+    public function handle(Cart $cart, int $product_id): void
     {
-        DB::transaction(function () use ($cart, $product): void {
-            
+        DB::transaction(function () use ($cart, $product_id): void {
+
+            $product = Product::findOrFail($product_id);
+
             $cart->products()->detach($product);
 
             $cart->update([
                 'amount' => $cart->amount - $product->price,
-                'products_amount' => $cart->products_amount - 1
+                'products_amount' => $cart->products_amount - 1,
             ]);
-            
+
         });
     }
 }

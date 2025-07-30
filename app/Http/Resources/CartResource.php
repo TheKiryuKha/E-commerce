@@ -24,6 +24,9 @@ final class CartResource extends JsonResource
             'attributes' => [
                 'amount' => $this->resource->amount,
                 'products_amount' => $this->resource->products_amount,
+                'products' => ProductResource::collection(
+                    $this->resource->products
+                ),
                 'created' => new DateResource(
                     $this->resource->created_at
                 ),
@@ -31,9 +34,6 @@ final class CartResource extends JsonResource
             'relations' => [
                 'user' => new UserResource(
                     $this->whenLoaded('user')
-                ),
-                'products' => ProductResource::collection(
-                    $this->whenLoaded('products')
                 ),
             ],
             'links' => [

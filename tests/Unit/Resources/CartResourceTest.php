@@ -30,6 +30,9 @@ test('toArray', function () {
         'attributes' => [
             'amount' => $this->cart->amount,
             'products_amount' => $this->cart->products_amount,
+            'products' => ProductResource::collection(
+                $this->cart->products
+            ),
             'created' => new DateResource(
                 $this->cart->created_at
             ),
@@ -37,9 +40,6 @@ test('toArray', function () {
         'relations' => [
             'user' => new UserResource(
                 $this->cart->user
-            ),
-            'products' => ProductResource::collection(
-                $this->cart->products
             ),
         ],
         'links' => [
