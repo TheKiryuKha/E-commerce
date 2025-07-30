@@ -60,4 +60,12 @@ final class Product extends Model
     {
         return $this->belongsToMany(Invoice::class);
     }
+
+    /**
+     * @return BelongsToMany<Cart, $this, Pivot>
+     */
+    public function carts(): BelongsToMany
+    {
+        return $this->belongsToMany(Cart::class);
+    }
 }

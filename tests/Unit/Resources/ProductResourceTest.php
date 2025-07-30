@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Resources\DateResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -20,6 +21,9 @@ test('toArray', function () {
             'price' => $product->price,
             'status' => $product->status,
             'quantity' => $product->quantity,
+            'created' => new DateResource(
+                $product->created_at
+            ),
         ],
         'relations' => [],
         'links' => [

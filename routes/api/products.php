@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AddProductToCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSeeController;
 use App\Http\Controllers\UserProductsController;
@@ -15,3 +16,5 @@ Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destro
 
 Route::get('/user/{user}', UserProductsController::class)->name('user:index');
 Route::get('/{user}/see/{product}', ProductSeeController::class)->name('see');
+
+Route::get('/{user}/addToCart/{product}', AddProductToCartController::class)->name('addToCart');

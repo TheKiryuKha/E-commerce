@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\ProductStatus;
+use App\Models\Cart;
 use App\Models\History;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -77,4 +78,13 @@ it('has invoices', function () {
     $product->invoices()->save($invoice);
 
     $this->assertTrue($product->invoices->contains($invoice));
+});
+
+it('belongs to carts', function () {
+    $product = Product::factory()->create();
+    $cart = Cart::factory()->create();
+
+    $product->carts()->save($cart);
+
+    $this->assertTrue($product->carts->contains($cart));
 });

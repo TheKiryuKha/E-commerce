@@ -14,6 +14,10 @@ Route::middleware('auth:sanctum')->as('api:')->group(function () {
         base_path('routes/api/products.php')
     );
 
+    Route::prefix('carts')->as('carts:')->group(
+        base_path('routes/api/carts.php')
+    );
+
 });
 
 /**

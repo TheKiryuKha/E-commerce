@@ -27,6 +27,9 @@ final class ProductResource extends JsonResource
                 'price' => $this->resource->price,
                 'status' => $this->resource->status,
                 'quantity' => $this->resource->quantity,
+                'created' => new DateResource(
+                    $this->resource->created_at
+                ),
             ],
             'relations' => [],
             'links' => [
