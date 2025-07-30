@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AddProductToCartController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductSeeController;
-use App\Http\Controllers\UserProductsController;
+use App\Http\Controllers\Cart\AddProductToCartController;
+use App\Http\Controllers\Cart\CartRemoveController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\ProductSeeController;
+use App\Http\Controllers\Product\UserProductsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index'])->name('index');
@@ -18,3 +19,4 @@ Route::get('/user/{user}', UserProductsController::class)->name('user:index');
 Route::get('/{user}/see/{product}', ProductSeeController::class)->name('see');
 
 Route::get('/{user}/addToCart/{product}', AddProductToCartController::class)->name('addToCart');
+Route::get('/{user}/removeFromCart/{product}', CartRemoveController::class)->name('removeFromCart');

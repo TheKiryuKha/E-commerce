@@ -70,7 +70,8 @@
         "commit": [
             "@test:unit",
             "@test:types",
-            "@fix"
+            "@refactor",
+            "@lint"
         ],
         
         "test:lint": "pint --test",

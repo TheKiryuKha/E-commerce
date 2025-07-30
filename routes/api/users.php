@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserEmailController;
-use App\Http\Controllers\UserRoleController;
-use App\Http\Controllers\UserStatusController;
+use App\Http\Controllers\User\AdminController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserEmailController;
+use App\Http\Controllers\User\UserRoleController;
+use App\Http\Controllers\User\UserStatusController;
 
 Route::get('/', [UserController::class, 'index'])->name('index');
 Route::get('/{user}', [UserController::class, 'show'])->name('show');

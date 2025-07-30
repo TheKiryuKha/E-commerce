@@ -8,7 +8,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
-final readonly class AddProductToCart
+final readonly class CreateCartItem
 {
     public function handle(Cart $cart, Product $product): void
     {
