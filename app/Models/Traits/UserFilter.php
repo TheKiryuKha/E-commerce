@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models\Traits;
 
+use App\Enums\HistoryStatus;
 use App\Enums\UserRole;
+use App\Models\History;
+use App\Models\Product;
 
 trait UserFilter
 {
@@ -29,5 +32,13 @@ trait UserFilter
         }
 
         return true;
+    }
+
+    public function isViewed(Product $product): bool
+    {
+        return History::where('user_id', $this->id)
+            ->where('product_id', $product->id)
+            ->where('status', HistoryStatus::Viewed)
+            ->exists();
     }
 }

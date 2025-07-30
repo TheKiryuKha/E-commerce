@@ -4,31 +4,24 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\HistoryStatus;
+use App\Actions\MarkProductAsViewed;
 use App\Http\Resources\ProductResource;
-use App\Models\History;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
 final class ProductSeeController
 {
-    public function __invoke(User $user, Product $product): ProductResource
-    {
+    public function __invoke(
+        User $user,
+        Product $product,
+        MarkProductAsViewed $action
+    ): ProductResource {
+
         Gate::authorize('seeProducts', $user);
 
-        $history = History::where('user_id', $user->id)
-            ->where('product_id', $product->id)
-            ->where('status', HistoryStatus::Viewed)
-            ->exists();
-
-        if (! $history) {
-            History::create([
-                'user_id' => $user->id,
-                'product_id' => $product->id,
-                'status' => HistoryStatus::Viewed,
-                'time' => now(),
-            ]);
+        if (! $user->isViewed($product)) {
+            $action->handle($user, $product);
         }
 
         return new ProductResource($product);
