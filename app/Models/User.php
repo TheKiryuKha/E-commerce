@@ -32,6 +32,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read Collection<int, PersonalAccessToken> $tokens
  * @property-read Collection<int, Invoice> $invoices,
  * @property-read Collection<int, Invoice> $purchases
+ * @property-read Cart $cart
  */
 final class User extends Authenticatable
 {
