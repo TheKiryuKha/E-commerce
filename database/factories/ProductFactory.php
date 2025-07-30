@@ -29,4 +29,11 @@ final class ProductFactory extends Factory
             'quantity' => random_int(1, 1000),
         ];
     }
+
+    public function notAvailable(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => ProductStatus::NotAvaileble,
+        ]);
+    }
 }

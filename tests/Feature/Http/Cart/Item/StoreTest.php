@@ -57,3 +57,14 @@ test('user cannot add product not to his cart', function () {
 
     $response->assertStatus(403);
 });
+
+test('cannot add product which is not available', function () {
+    $product = Product::factory()->notAvailable()->create();
+
+    $response = $this->actingAs($this->user)->post(
+        route('api:carts:item:store', $this->cart),
+        ['product_id' => $product->id]
+    );
+
+    $response->assertStatus(302);
+});
