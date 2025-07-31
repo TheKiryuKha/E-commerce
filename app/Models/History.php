@@ -8,6 +8,7 @@ use App\Enums\HistoryStatus;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property-read int $id,
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read CarbonInterface $time,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at
+ * @property-read Product $product,
+ * @property-read User $user,
  */
 final class History extends Model
 {
@@ -26,4 +29,20 @@ final class History extends Model
     protected $casts = [
         'status' => HistoryStatus::class,
     ];
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo<Product, $this>
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

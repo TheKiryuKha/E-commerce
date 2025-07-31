@@ -22,6 +22,9 @@ Route::middleware('auth:sanctum')->as('api:')->group(function () {
         base_path('routes/api/invoices.php')
     );
 
+    Route::prefix('histories')->as('histories:')->group(
+        base_path('routes/api/histories.php')
+    );
 });
 
 /**
