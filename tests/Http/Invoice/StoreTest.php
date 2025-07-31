@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\HistoryStatus;
 use App\Enums\InvoiceStatus;
 use App\Models\Cart;
 use App\Models\Invoice;
@@ -40,6 +41,25 @@ it("create's invoice", function () {
         'user_telephone' => '375447191945',
         'user_email' => $this->user->email,
         'status' => InvoiceStatus::Paid,
+    ]);
+});
+
+it("save's user purchase in history", function () {
+    $cart = Cart::factory()->create([
+        'user_id' => $this->user->id,
+        'amount' => $this->product->price,
+    ]);
+    $cart->products()->save($this->product);
+
+    $this->actingAs($this->user)->post(
+        route('api:invoices:store', $cart),
+        $this->data
+    );
+
+    $this->assertDatabaseHas('histories', [
+        'user_id' => $this->user->id,
+        'product_id' => $this->product->id,
+        'status' => HistoryStatus::Purchased,
     ]);
 });
 

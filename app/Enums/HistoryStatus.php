@@ -12,8 +12,8 @@ enum HistoryStatus: string
     public function label(): string
     {
         return match ($this) {
-            HistoryStatus::Viewed => 'Просмотрено',
-            HistoryStatus::Purchased => 'Куплено'
+            self::Viewed => 'Просмотрено',
+            self::Purchased => 'Куплено'
         };
     }
 }

@@ -6,6 +6,7 @@ namespace App\Actions;
 
 use App\DTOs\InvoiceDto;
 use App\Enums\InvoiceStatus;
+use App\Events\NewInvoice;
 use App\Models\Cart;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,8 @@ final readonly class CreateInvoice
             ]);
 
             $invoice->products()->sync($cart->products);
+
+            NewInvoice::dispatch($invoice);
 
             return $invoice;
         });

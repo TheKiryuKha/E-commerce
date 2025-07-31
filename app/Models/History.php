@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read int $id,
  * @property-read int $user_id,
  * @property-read int $product_id,
- * @property-read string $status,
+ * @property-read HistoryStatus $status,
  * @property-read CarbonInterface $time,
  * @property-read CarbonInterface $created_at,
  * @property-read CarbonInterface $updated_at

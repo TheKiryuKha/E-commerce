@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Actions\CreateInvoice;
 use App\DTOs\InvoiceDto;
+use App\Enums\HistoryStatus;
 use App\Enums\InvoiceStatus;
 use App\Models\Cart;
 use App\Models\Invoice;
@@ -52,4 +53,16 @@ it('returns invoice', function () {
     $invoice = $action->handle($this->cart, $this->dto);
 
     expect($invoice)->toBeInstanceOf(Invoice::class);
+});
+
+it("save's users purchase in history", function () {
+    $action = app(CreateInvoice::class);
+
+    $action->handle($this->cart, $this->dto);
+
+    $this->assertDatabaseHas('histories', [
+        'user_id' => $this->user->id,
+        'product_id' => $this->product->id,
+        'status' => HistoryStatus::Purchased,
+    ]);
 });
