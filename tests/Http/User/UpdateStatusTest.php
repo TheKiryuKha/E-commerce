@@ -57,7 +57,7 @@ test('admin can ban user', function () {
         return true;
     });
 
-    Mail::assertSent(BannedUserMail::class, function (BannedUserMail $mail) {
+    Mail::assertQueued(BannedUserMail::class, function (BannedUserMail $mail) {
         $this->assertEquals($mail->envelope()->subject, 'Banned in application');
         $this->assertEquals($mail->content()->markdown, 'mails.banned-user');
         $this->assertEquals($this->user->email, $mail->to[0]['address']);
@@ -89,7 +89,7 @@ test('admin can unban user', function () {
         return true;
     });
 
-    Mail::assertSent(UnbannedUserMail::class, function (UnbannedUserMail $mail) use ($user) {
+    Mail::assertQueued(UnbannedUserMail::class, function (UnbannedUserMail $mail) use ($user) {
         $this->assertEquals($mail->envelope()->subject, 'Unbanned in application');
         $this->assertEquals($mail->content()->markdown, 'mails.unbanned-user');
         $this->assertEquals($user->email, $mail->to[0]['address']);

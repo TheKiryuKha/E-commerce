@@ -59,6 +59,8 @@
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
         ],
+
+
         "lint": "pint",
         "refactor": ["Composer\\Config::disableProcessTimeout", "php -d memory_limit=-1 vendor/bin/rector"],
         
@@ -76,6 +78,7 @@
         
         "test:lint": "pint --test",
         "test:refactor": "php -d memory_limit=-1 vendor/bin/rector --dry-run",
+        "test:arch": "pest --group=arch",
         "test:types": "phpstan analyse --memory-limit=-1",
         "test:unit": ["Composer\\Config::disableProcessTimeout", "pest --parallel --coverage"],
         "test": [

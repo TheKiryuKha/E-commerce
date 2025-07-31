@@ -8,7 +8,7 @@ use App\Actions\CreateAdmin as Action;
 use App\DTOs\UserDto;
 use Illuminate\Console\Command;
 
-final class CreateAdmin extends Command
+final class CreateAdminCommand extends Command
 {
     /**
      * @var string

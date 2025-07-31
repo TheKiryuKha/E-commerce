@@ -7,7 +7,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-final class ClearAuthCodes extends Command
+final class ClearAuthCodesCommand extends Command
 {
     /**
      * @var string

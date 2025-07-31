@@ -17,6 +17,10 @@ pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Http', 'Unit', 'Console');
 
+pest()->extend(Tests\TestCase::class)
+        ->group('arch')
+        ->in('Arch');
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
