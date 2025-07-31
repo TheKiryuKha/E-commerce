@@ -18,4 +18,9 @@ final class CartPolicy
     {
         return $cart->user_id === $user->id;
     }
+
+    public function buy(User $user, Cart $cart): bool
+    {
+        return $cart->user_id === $user->id;
+    }
 }
