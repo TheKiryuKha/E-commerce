@@ -1,12 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "thekiryukha/e-commerceapi",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": [
-        "laravel",
-        "framework"
-    ],
+    "description": "E-commerce API pet projetc",
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -63,7 +59,7 @@
 
 
         "lint": "pint",
-        "refactor": ["Composer\\Config::disableProcessTimeout", "php -d memory_limit=-1 vendor/bin/rector"],
+        "refactor": "php -d memory_limit=-1 vendor/bin/rector",
         
         "fix": [
             "@refactor",
@@ -78,15 +74,31 @@
         ],
         
         "test:lint": "pint --test",
-        "test:refactor": "php -d memory_limit=-1 vendor/bin/rector --dry-run",
+        "test:refactor": "rector --dry-run",
         "test:arch": "pest --group=arch",
         "test:types": "phpstan analyse --memory-limit=-1",
-        "test:unit": ["Composer\\Config::disableProcessTimeout", "pest --parallel --coverage"],
+        "test:unit": "pest --parallel --coverage",
         "test": [
             "@test:lint",
             "@test:refactor",
             "@test:types",
             "@test:unit"
+        ],
+
+        "app:install": [
+            "composer dump-autoload --optimize",
+            "php artisan config:cache",
+            "php artisan event:cache",
+            "php artisan route:cache",
+            "php artisan view:cache",
+            "php artisan optimiz",
+            "php artisan storage:link",
+
+            "php artisan key:generate",
+
+            "php artisan migrate",
+
+            "php artisan app:create-admin"
         ]
     },
     "extra": {
