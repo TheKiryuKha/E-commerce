@@ -8,4 +8,12 @@ enum HistoryStatus: string
 {
     case Viewed = 'viewed';
     case Purchased = 'purchased';
+
+    public function label(): string
+    {
+        return match ($this) {
+            HistoryStatus::Viewed => 'Просмотрено',
+            HistoryStatus::Purchased => 'Куплено'
+        };
+    }
 }

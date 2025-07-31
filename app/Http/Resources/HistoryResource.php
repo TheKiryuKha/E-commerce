@@ -18,8 +18,6 @@ final class HistoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $this->resource->load('user', 'product');
-
         return [
             'id' => $this->resource->id,
             'type' => 'history',

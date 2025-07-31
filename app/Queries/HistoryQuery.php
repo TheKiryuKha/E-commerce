@@ -18,7 +18,7 @@ final readonly class HistoryQuery
     public function get(Builder $query): Builder
     {
         return QueryBuilder::for(
-            $query
+            $query->with(['user', 'product'])
         )->allowedFilters([
             AllowedFilter::exact('user_id'),
             AllowedFilter::exact('product_id'),
