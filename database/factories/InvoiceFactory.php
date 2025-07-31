@@ -37,4 +37,11 @@ final class InvoiceFactory extends Factory
             'status' => InvoiceStatus::Paid,
         ]);
     }
+
+    public function onWay(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => InvoiceStatus::OnWay,
+        ]);
+    }
 }

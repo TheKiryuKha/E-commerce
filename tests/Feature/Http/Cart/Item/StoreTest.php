@@ -19,7 +19,7 @@ it('adds product to cart', function () {
         ['product_id' => $product->id]
     );
 
-    expect($this->cart->products->contains($product));
+    expect($this->cart->products->contains($product))->toBeTrue();
 });
 
 it("updates cart's data after adding product", function () {

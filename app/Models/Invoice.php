@@ -6,7 +6,9 @@ namespace App\Models;
 
 use App\Enums\InvoiceStatus;
 use App\Models\Traits\InvoiceFilter;
+use App\Observers\InvoiceObserver;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property-read User $vendor,
  * @property-read Collection<int, Product> $products
  */
+#[ObservedBy([InvoiceObserver::class])]
 final class Invoice extends Model
 {
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
@@ -54,5 +57,13 @@ final class Invoice extends Model
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'vendor_id');
+    }
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'customer_id');
     }
 }
