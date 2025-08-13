@@ -18,8 +18,8 @@ pest()->extend(Tests\TestCase::class)
     ->in('Http', 'Unit', 'Console');
 
 pest()->extend(Tests\TestCase::class)
-        ->group('arch')
-        ->in('Arch');
+    ->group('arch')
+    ->in('Arch');
 
 /*
 |--------------------------------------------------------------------------
